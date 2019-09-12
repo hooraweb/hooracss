@@ -145,53 +145,53 @@ p {
 .block {
   display: block !important; }
 
+.hover\:block:hover {
+  display: block !important; }
+
 .inline-block {
+  display: inline-block !important; }
+
+.hover\:inline-block:hover {
   display: inline-block !important; }
 
 .inline {
   display: inline !important; }
 
+.hover\:inline:hover {
+  display: inline !important; }
+
 .flex {
+  display: flex !important; }
+
+.hover\:flex:hover {
   display: flex !important; }
 
 .inline-flex {
   display: inline-flex !important; }
 
+.hover\:inline-flex:hover {
+  display: inline-flex !important; }
+
 .table {
+  display: table !important; }
+
+.hover\:table:hover {
   display: table !important; }
 
 .table-row {
   display: table-row !important; }
 
+.hover\:table-row:hover {
+  display: table-row !important; }
+
 .table-cell {
+  display: table-cell !important; }
+
+.hover\:table-cell:hover {
   display: table-cell !important; }
 
 .hidden {
   display: none !important; }
-
-.hover\:block:hover {
-  display: block !important; }
-
-.hover\:inline-block:hover {
-  display: inline-block !important; }
-
-.hover\:inline:hover {
-  display: inline !important; }
-
-.hover\:flex:hover {
-  display: flex !important; }
-
-.hover\:inline-flex:hover {
-  display: inline-flex !important; }
-
-.hover\:table:hover {
-  display: table !important; }
-
-.hover\:table-row:hover {
-  display: table-row !important; }
-
-.hover\:table-cell:hover {
-  display: table-cell !important; }
 
 .hover\:hidden:hover {
   display: none !important; }
@@ -4395,38 +4395,38 @@ p {
     max-width: "576px"; }
   .sm\:block {
     display: block !important; }
+  .sm\:hover\:block:hover {
+    display: block !important; }
   .sm\:inline-block {
+    display: inline-block !important; }
+  .sm\:hover\:inline-block:hover {
     display: inline-block !important; }
   .sm\:inline {
     display: inline !important; }
+  .sm\:hover\:inline:hover {
+    display: inline !important; }
   .sm\:flex {
+    display: flex !important; }
+  .sm\:hover\:flex:hover {
     display: flex !important; }
   .sm\:inline-flex {
     display: inline-flex !important; }
+  .sm\:hover\:inline-flex:hover {
+    display: inline-flex !important; }
   .sm\:table {
+    display: table !important; }
+  .sm\:hover\:table:hover {
     display: table !important; }
   .sm\:table-row {
     display: table-row !important; }
+  .sm\:hover\:table-row:hover {
+    display: table-row !important; }
   .sm\:table-cell {
+    display: table-cell !important; }
+  .sm\:hover\:table-cell:hover {
     display: table-cell !important; }
   .sm\:hidden {
     display: none !important; }
-  .sm\:hover\:block:hover {
-    display: block !important; }
-  .sm\:hover\:inline-block:hover {
-    display: inline-block !important; }
-  .sm\:hover\:inline:hover {
-    display: inline !important; }
-  .sm\:hover\:flex:hover {
-    display: flex !important; }
-  .sm\:hover\:inline-flex:hover {
-    display: inline-flex !important; }
-  .sm\:hover\:table:hover {
-    display: table !important; }
-  .sm\:hover\:table-row:hover {
-    display: table-row !important; }
-  .sm\:hover\:table-cell:hover {
-    display: table-cell !important; }
   .sm\:hover\:hidden:hover {
     display: none !important; }
   .sm\:float-right {
@@ -7218,38 +7218,38 @@ p {
     max-width: "768px"; }
   .md\:block {
     display: block !important; }
+  .md\:hover\:block:hover {
+    display: block !important; }
   .md\:inline-block {
+    display: inline-block !important; }
+  .md\:hover\:inline-block:hover {
     display: inline-block !important; }
   .md\:inline {
     display: inline !important; }
+  .md\:hover\:inline:hover {
+    display: inline !important; }
   .md\:flex {
+    display: flex !important; }
+  .md\:hover\:flex:hover {
     display: flex !important; }
   .md\:inline-flex {
     display: inline-flex !important; }
+  .md\:hover\:inline-flex:hover {
+    display: inline-flex !important; }
   .md\:table {
+    display: table !important; }
+  .md\:hover\:table:hover {
     display: table !important; }
   .md\:table-row {
     display: table-row !important; }
+  .md\:hover\:table-row:hover {
+    display: table-row !important; }
   .md\:table-cell {
+    display: table-cell !important; }
+  .md\:hover\:table-cell:hover {
     display: table-cell !important; }
   .md\:hidden {
     display: none !important; }
-  .md\:hover\:block:hover {
-    display: block !important; }
-  .md\:hover\:inline-block:hover {
-    display: inline-block !important; }
-  .md\:hover\:inline:hover {
-    display: inline !important; }
-  .md\:hover\:flex:hover {
-    display: flex !important; }
-  .md\:hover\:inline-flex:hover {
-    display: inline-flex !important; }
-  .md\:hover\:table:hover {
-    display: table !important; }
-  .md\:hover\:table-row:hover {
-    display: table-row !important; }
-  .md\:hover\:table-cell:hover {
-    display: table-cell !important; }
   .md\:hover\:hidden:hover {
     display: none !important; }
   .md\:float-right {
@@ -10041,38 +10041,38 @@ p {
     max-width: "992px"; }
   .lg\:block {
     display: block !important; }
+  .lg\:hover\:block:hover {
+    display: block !important; }
   .lg\:inline-block {
+    display: inline-block !important; }
+  .lg\:hover\:inline-block:hover {
     display: inline-block !important; }
   .lg\:inline {
     display: inline !important; }
+  .lg\:hover\:inline:hover {
+    display: inline !important; }
   .lg\:flex {
+    display: flex !important; }
+  .lg\:hover\:flex:hover {
     display: flex !important; }
   .lg\:inline-flex {
     display: inline-flex !important; }
+  .lg\:hover\:inline-flex:hover {
+    display: inline-flex !important; }
   .lg\:table {
+    display: table !important; }
+  .lg\:hover\:table:hover {
     display: table !important; }
   .lg\:table-row {
     display: table-row !important; }
+  .lg\:hover\:table-row:hover {
+    display: table-row !important; }
   .lg\:table-cell {
+    display: table-cell !important; }
+  .lg\:hover\:table-cell:hover {
     display: table-cell !important; }
   .lg\:hidden {
     display: none !important; }
-  .lg\:hover\:block:hover {
-    display: block !important; }
-  .lg\:hover\:inline-block:hover {
-    display: inline-block !important; }
-  .lg\:hover\:inline:hover {
-    display: inline !important; }
-  .lg\:hover\:flex:hover {
-    display: flex !important; }
-  .lg\:hover\:inline-flex:hover {
-    display: inline-flex !important; }
-  .lg\:hover\:table:hover {
-    display: table !important; }
-  .lg\:hover\:table-row:hover {
-    display: table-row !important; }
-  .lg\:hover\:table-cell:hover {
-    display: table-cell !important; }
   .lg\:hover\:hidden:hover {
     display: none !important; }
   .lg\:float-right {
@@ -12864,38 +12864,38 @@ p {
     max-width: "1200px"; }
   .xl\:block {
     display: block !important; }
+  .xl\:hover\:block:hover {
+    display: block !important; }
   .xl\:inline-block {
+    display: inline-block !important; }
+  .xl\:hover\:inline-block:hover {
     display: inline-block !important; }
   .xl\:inline {
     display: inline !important; }
+  .xl\:hover\:inline:hover {
+    display: inline !important; }
   .xl\:flex {
+    display: flex !important; }
+  .xl\:hover\:flex:hover {
     display: flex !important; }
   .xl\:inline-flex {
     display: inline-flex !important; }
+  .xl\:hover\:inline-flex:hover {
+    display: inline-flex !important; }
   .xl\:table {
+    display: table !important; }
+  .xl\:hover\:table:hover {
     display: table !important; }
   .xl\:table-row {
     display: table-row !important; }
+  .xl\:hover\:table-row:hover {
+    display: table-row !important; }
   .xl\:table-cell {
+    display: table-cell !important; }
+  .xl\:hover\:table-cell:hover {
     display: table-cell !important; }
   .xl\:hidden {
     display: none !important; }
-  .xl\:hover\:block:hover {
-    display: block !important; }
-  .xl\:hover\:inline-block:hover {
-    display: inline-block !important; }
-  .xl\:hover\:inline:hover {
-    display: inline !important; }
-  .xl\:hover\:flex:hover {
-    display: flex !important; }
-  .xl\:hover\:inline-flex:hover {
-    display: inline-flex !important; }
-  .xl\:hover\:table:hover {
-    display: table !important; }
-  .xl\:hover\:table-row:hover {
-    display: table-row !important; }
-  .xl\:hover\:table-cell:hover {
-    display: table-cell !important; }
   .xl\:hover\:hidden:hover {
     display: none !important; }
   .xl\:float-right {

@@ -1,3 +1,28 @@
-@mixin screen-displays ($screen, $variant, $prefix){
+@mixin screen-variant ($screen, $variants, $class){
+    @if $screen != ''{ $screen: $screen + '\\:'; }
 
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            .#{$screen}#{$variant}#{$class}#{$variant-css}{
+                @content;
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            // @each  $display-name, $display-value in $displays {
+                .#{$screen}#{$variant-css} .#{$screen}#{$variant}#{$class}{
+                    @content;
+                }
+            // }
+        }
+    }
 }
