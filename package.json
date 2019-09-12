@@ -1,0 +1,27 @@
+{
+  "name": "hoorakit",
+  "version": "0.0.1",
+  "description": "web ui kit ",
+  "main": "index.js",
+  "scripts": {
+    "watch": "node-sass sass/main.scss css/style.css -w",
+    "live": "live-server|node-sass sass/main.scss css/style.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hooraweb/hoorakit.git"
+  },
+  "keywords": [
+    "uikit"
+  ],
+  "author": "hooraweb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hooraweb/hoorakit/issues"
+  },
+  "homepage": "https://github.com/hooraweb/hoorakit#readme",
+  "dependencies": {
+    "live-server": "^1.2.1",
+    "node-sass": "^4.12.0"
+  }
+}
