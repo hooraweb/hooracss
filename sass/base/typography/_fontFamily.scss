@@ -7,7 +7,7 @@
     @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
     @each $variant in $variants {
         $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
+        @if index($variant-list ,$variant ) != null { 
             @if $variant != ''{
                 @if $variant == 'last' {$variant-css: ':last-child'}             
                 @else if $variant == 'first' {$variant-css: ':first-child'} 
