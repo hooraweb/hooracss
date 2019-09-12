@@ -1,0 +1,34 @@
+@mixin screen-justify-contents (
+        $screen-name: '',
+        $variants: map-get($justify-content, variants),
+        $prefix: map-get($justify-content, prefix),
+        $justifyContents: map-get($justify-content, justifyContents)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $justifyContent-name, $justifyContent-value in $justifyContents {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$justifyContent-name}#{$variant-css}{
+                    justify-content: $justifyContent-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $justifyContent-name, $justifyContent-value in $justifyContents {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$justifyContent-name}{
+                    justify-content: $justifyContent-value !important; 
+                }
+            }
+        }
+    }
+}

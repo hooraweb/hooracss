@@ -1,0 +1,35 @@
+@mixin screen-resizes (
+        $screen-name: '',
+        $variants: map-get($resize, variants),
+        $prefix: map-get($resize, prefix),
+        $resizes: map-get($resize, resizes)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $resize-name, $resize-value in $resizes {
+                @if $resize-name != ''{ $resize-name: '-' + $resize-name}
+                .#{$screen-name}#{$variant}#{$prefix}#{$resize-name}#{$variant-css}{
+                    resize: $resize-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $resize-name, $resize-value in $resizes {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$resize-name}{
+                    resize: $resize-value !important; 
+                }
+            }
+        }
+    }
+}

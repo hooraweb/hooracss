@@ -1,0 +1,55 @@
+@mixin screen-paddings (
+        $screen-name: '',
+        $variants: map-get($padding, variants),
+        $prefix: map-get($padding, prefix),
+        $types: map-get($padding, types),
+        $paddingSizes: map-get($padding, paddingSizes)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $type-key, $type in $types {
+                @each $paddingSize-name, $paddingSize-value in $paddingSizes {
+                    @if $paddingSize-value != auto {
+                        .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$paddingSize-name}#{$variant-css}{
+                            @include padding-type($type, $paddingSize-value);
+                        }
+                    }
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $type-key, $type in $types {
+                @each $paddingSize-name, $paddingSize-value in $paddingSizes {
+                    @if $paddingSize-value != auto {
+                        .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$paddingSize-name}{
+                            @include padding-type($type, $paddingSize-value); 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin padding-type($type, $paddingSize-value){
+    @if ($type == 'padding-x') {
+        padding-right: $paddingSize-value !important;
+        padding-left: $paddingSize-value !important;
+    } @else if ($type == 'padding-y') {
+        padding-top: $paddingSize-value !important;
+        padding-bottom: $paddingSize-value !important;
+    } @else {
+        #{$type}: $paddingSize-value !important;
+    }
+}

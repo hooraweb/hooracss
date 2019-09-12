@@ -1,0 +1,34 @@
+@mixin screen-strokes (
+        $screen-name: '',
+        $variants: map-get($stroke, variants),
+        $prefix: map-get($stroke, prefix),
+        $strokes: map-get($stroke, strokes)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each  $stroke-name, $stroke-value in $strokes {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$stroke-name}#{$variant-css}{
+                    stroke: $stroke-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $stroke-name, $stroke-value in $strokes {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$stroke-name}{
+                    stroke: $stroke-value !important; 
+                }
+            }
+        }
+    }
+}

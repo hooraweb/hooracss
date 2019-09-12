@@ -1,0 +1,54 @@
+@mixin screen-word-breaks (
+        $screen-name: '',
+        $variants: map-get($word-break, variants),
+        $prefix: map-get($word-break, prefix),
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @if $prefix != ''{ $prefix: $prefix + '-'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            .#{$screen-name}#{$variant}#{break-normal}#{$variant-css}{
+                word-break: normal !important;
+                overflow-wrap: normal !important;
+            }
+            .#{$screen-name}#{$variant}#{break-words}#{$variant-css}{
+                overflow-wrap: break-word !important;
+            }
+            .#{$screen-name}#{$variant}#{break-all}#{$variant-css}{
+                word-break: break-all !important;
+            }
+            .#{$screen-name}#{$variant}#{truncate}#{$variant-css}{
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important;
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{break-normal}{
+                word-break: normal !important;
+                overflow-wrap: normal !important; 
+            }
+            .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{break-words}{
+                overflow-wrap: break-word !important; 
+            }
+            .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{break-all}{
+                word-break: break-all !important; 
+            }
+            .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{truncate}{
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important; 
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+@mixin screen-max-widths (
+        $screen-name: '',
+        $variants: map-get($max-width, variants),
+        $prefix: map-get($max-width, prefix),
+        $maxWidthSizes: map-get($max-width, maxWidthSizes)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $maxWidthSize-name, $maxWidthSize-value in $maxWidthSizes {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$maxWidthSize-name}#{$variant-css}{
+                    max-width: $maxWidthSize-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $maxWidthSize-name, $maxWidthSize-value in $maxWidthSizes {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$maxWidthSize-name}{
+                    max-width: $maxWidthSize-value !important; 
+                }
+            }
+        }
+    }
+}

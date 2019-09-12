@@ -1,0 +1,51 @@
+@mixin screen-margins (
+        $screen-name: '',
+        $variants: map-get($margin, variants),
+        $prefix: map-get($margin, prefix),
+        $types: map-get($margin, types),
+        $marginSizes: map-get($margin, marginSizes)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $type-key, $type in $types {
+                @each $marginSize-name, $marginSize-value in $marginSizes {
+                    .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$marginSize-name}#{$variant-css}{
+                        @include margin-type($type, $marginSize-value);
+                    }
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $type-key, $type in $types {
+                @each $marginSize-name, $marginSize-value in $marginSizes {
+                    .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$marginSize-name}{
+                        @include margin-type($type, $marginSize-value); 
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin margin-type($type, $marginSize-value){
+    @if ($type == 'margin-x') {
+        margin-right: $marginSize-value !important;
+        margin-left: $marginSize-value !important;
+    } @else if ($type == 'margin-y') {
+        margin-top: $marginSize-value !important;
+        margin-bottom: $marginSize-value !important;
+    } @else {
+        #{$type}: $marginSize-value !important;
+    }
+}

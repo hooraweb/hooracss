@@ -1,0 +1,34 @@
+@mixin screen-background-repeats (
+        $screen-name: '',
+        $variants: map-get($background-repeat, variants),
+        $prefix: map-get($background-repeat, prefix),
+        $backgroundRepeats: map-get($background-repeat, backgroundRepeats)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $backgroundRepeat-name, $backgroundRepeat-value in $backgroundRepeats {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$backgroundRepeat-name}#{$variant-css}{
+                    background-repeat: $backgroundRepeat-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $backgroundRepeat-name, $backgroundRepeat-value in $backgroundRepeats {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$backgroundRepeat-name}{
+                    background-repeat: $backgroundRepeat-value !important; 
+                }
+            }
+        }
+    }
+}

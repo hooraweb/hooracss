@@ -1,0 +1,16 @@
+@mixin screen-containers (
+        $screen-name: '',
+        $prefix: map-get($container, prefix),
+        $containers: map-get($container, containers)
+    ) {
+    $screen-name-default : $screen-name;
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $container-name, $container-value in $containers {
+        @if $screen-name-default == $container-name{
+            @if $container-name != ''{
+                .#{$prefix}{max-width: $container-value; }
+            }
+            @else{.#{$prefix}{width: $container-value; }}
+        }
+    }
+}

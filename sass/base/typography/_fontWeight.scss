@@ -1,0 +1,34 @@
+@mixin screen-font-weights (
+        $screen-name: '',
+        $variants: map-get($font-weight, variants),
+        $prefix: map-get($font-weight, prefix),
+        $fontWeights: map-get($font-weight, fontWeights)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $fontWeight-name, $fontWeight-value in $fontWeights {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$fontWeight-name}#{$variant-css}{
+                    font-weight: $fontWeight-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $fontWeight-name, $fontWeight-value in $fontWeights {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$fontWeight-name}{
+                    font-weight: $fontWeight-value !important; 
+                }
+            }
+        }
+    }
+}

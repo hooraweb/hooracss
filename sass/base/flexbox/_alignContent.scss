@@ -1,0 +1,34 @@
+@mixin screen-align-contents (
+        $screen-name: '',
+        $variants: map-get($align-content, variants),
+        $prefix: map-get($align-content, prefix),
+        $alignContents: map-get($align-content, alignContents)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $alignContent-name, $alignContent-value in $alignContents {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$alignContent-name}#{$variant-css}{
+                    align-content: $alignContent-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $alignContent-name, $alignContent-value in $alignContents {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$alignContent-name}{
+                    align-content: $alignContent-value !important; 
+                }
+            }
+        }
+    }
+}

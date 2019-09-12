@@ -1,0 +1,34 @@
+@mixin screen-object-fits (
+        $screen-name: '',
+        $variants: map-get($object-fit, variants),
+        $prefix: map-get($object-fit, prefix),
+        $objectFits: map-get($object-fit, objectFits)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each  $objectFit-name, $objectFit-value in $objectFits {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$objectFit-name}#{$variant-css}{
+                    object-fit: $objectFit-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each  $objectFit-name, $objectFit-value in $objectFits {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$objectFit-name}{
+                    object-fit: $objectFit-value !important; 
+                }
+            }
+        }
+    }
+}

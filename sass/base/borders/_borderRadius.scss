@@ -1,0 +1,65 @@
+@mixin screen-border-radiuses (
+        $screen-name: '',
+        $variants: map-get($border-radius, variants),
+        $prefix: map-get($border-radius, prefix),
+        $types: map-get($border-radius, types),
+        $borderRadiuses: map-get($border-radius, borderRadiuses)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each $type-key, $type in $types {
+                @each $borderRadius-name, $borderRadius-value in $borderRadiuses {
+                    .#{$screen-name}#{$variant}#{$prefix}#{$type-key}#{$borderRadius-name}#{$variant-css}{
+                        @include border-radius-type($type, $borderRadius-value);
+                    }
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $type-key, $type in $types {
+                @each $borderRadius-name, $borderRadius-value in $borderRadiuses {
+                    .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$borderRadius-name}{
+                        @include border-radius-type($type, $borderRadius-value); 
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin border-radius-type($type, $borderRadius-value){
+    @if ($type == 'border-top-radius') {
+        border-top-left-radius: $borderRadius-value !important;
+        border-top-right-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-bottom-radius') {
+        border-bottom-left-radius: $borderRadius-value !important;
+        border-bottom-right-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-right-radius') {
+        border-top-right-radius: $borderRadius-value !important;
+        border-bottom-right-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-left-radius') {
+        border-top-left-radius: $borderRadius-value !important;
+        border-bottom-left-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-top-left-radius') {
+        border-top-left-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-top-right-radius') {
+        border-top-right-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-bottom-left-radius') {
+        border-bottom-left-radius: $borderRadius-value !important;
+    } @else if ($type == 'border-bottom-right-radius') {
+        border-bottom-right-radius: $borderRadius-value !important;
+    } @else {
+        border-radius: $borderRadius-value !important;
+    }
+}

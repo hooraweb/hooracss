@@ -1,0 +1,34 @@
+@mixin screen-text-colors (
+        $screen-name: '',
+        $variants: map-get($text-color, variants),
+        $prefix: map-get($text-color, prefix),
+        $textColors: map-get($text-color, textColors)
+    ) {
+    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
+    @each $variant in $variants {
+        $variant-css: '';
+        @if index($variant-list ,$variant ) != null {
+            @if $variant != ''{
+                @if $variant == 'last' {$variant-css: ':last-child'}             
+                @else if $variant == 'first' {$variant-css: ':first-child'} 
+                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
+                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
+                @else {$variant-css: ':' +  $variant;}            
+                $variant: $variant + '\\:'; 
+            }
+            @each  $textColor-name, $textColor-value in $textColors {
+                .#{$screen-name}#{$variant}#{$prefix}-#{$textColor-name}#{$variant-css}{
+                    color: $textColor-value !important; 
+                }
+            }
+        } @else if $variant == 'group-hover' {
+            $variant-css: 'group\:hover';
+            $variant: $variant + '\\:';
+            @each $textColor-name, $textColor-value in $textColors {
+                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$textColor-name}{
+                    color: $textColor-value !important; 
+                }
+            }
+        }
+    }
+}
