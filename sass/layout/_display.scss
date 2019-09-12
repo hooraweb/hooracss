@@ -2,7 +2,7 @@
         $screen-name: '',
         $variants: map-get($display, variants),
         $prefix: map-get($display, prefix),
-        $displays: map-get($display, displays)
+        $displays: map-get($display, types)
     ) {
     @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
     @each $variant in $variants {

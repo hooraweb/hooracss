@@ -167,39 +167,37 @@ $colors: (
 
 
 //Layout 
-$containers: (
-    '': 100%,
-    sm: map-get($screens, sm),
-    md: map-get($screens, md),
-    lg: map-get($screens, lg),
-    xl: map-get($screens, xl),
-); 
+
 
 $container: (
-    enable: true,
-    containers: $containers,
-    responsive: true,
     prefix: 'container',
-);
-
-$displays: (
-    block: block,
-    inline-block: inline-block,
-    inline: inline,
-    flex: flex,
-    inline-flex: inline-flex,
-    table: table,
-    table-row: table-row,
-    table-cell:  table-cell,
-    hidden: none,
+    enable: true,
+    responsive: true,
+    sizes: (
+        '': 100%,
+        sm: map-get($screens, sm),
+        md: map-get($screens, md),
+        lg: map-get($screens, lg),
+        xl: map-get($screens, xl),
+    ),
 );
 
 $display: (
-    enable: true,
-    displays: $displays,
-    responsive: true,
     prefix: '',
-    variants: ('',hover)
+    enable: true,
+    responsive: true,
+    variants: ('',hover),
+    types: (
+        block: block,
+        inline-block: inline-block,
+        inline: inline,
+        flex: flex,
+        inline-flex: inline-flex,
+        table: table,
+        table-row: table-row,
+        table-cell:  table-cell,
+        hidden: none,
+    )
 );
 
 $floats: (

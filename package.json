@@ -1,5 +1,5 @@
 {
-  "name": "hoorakit",
+  "name": "hooracss",
   "version": "0.0.1",
   "description": "web ui kit ",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hooraweb/hoorakit.git"
+    "url": "git+https://github.com/hooraweb/hooracss.git"
   },
   "keywords": [
     "uikit"
@@ -17,9 +17,9 @@
   "author": "hooraweb",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hooraweb/hoorakit/issues"
+    "url": "https://github.com/hooraweb/hooracss/issues"
   },
-  "homepage": "https://github.com/hooraweb/hoorakit#readme",
+  "homepage": "https://github.com/hooraweb/hooracss#readme",
   "dependencies": {
     "live-server": "^1.2.1",
     "node-sass": "^4.12.0"
