@@ -5,7 +5,6 @@
         $types: map-get($border-radius, types),
         $borderRadiuses: map-get($border-radius, borderRadiuses)
     ) {
-        
     @each $type-key, $type in $types {
         @each $borderRadius-name, $borderRadius-value in $borderRadiuses {
             @include screen-variant($screen, $variants, $prefix + $type-key + $borderRadius-name){
@@ -13,7 +12,6 @@
             }
         }
     }
-        
 }
 
 @mixin border-radius-type($type, $borderRadius-value){
