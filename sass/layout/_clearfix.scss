@@ -1,39 +1,13 @@
 @mixin screen-clearfixes (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($clearfix, variants),
         $prefix: map-get($clearfix, prefix),
-        // $features: map-get($clearfix, wordBreaks)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @if $prefix != ''{ $prefix: $prefix + '-'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            .#{$screen-name}#{$variant}#{$prefix}#{clearfix}#{$variant-css}{
-                &::after {
-                    content: "";
-                    display: table;
-                    clear: both;
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{clearfix}{
-                &::after {
-                    content: "";
-                    display: table;
-                    clear: both;
-                }
-            }
+    @include screen-variant($screen, $variants, $prefix + clearfix){
+        &::after {
+            content: "";
+            display: table;
+            clear: both;
         }
     }
 }

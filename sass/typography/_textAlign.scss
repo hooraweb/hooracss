@@ -1,34 +1,12 @@
 @mixin screen-text-aligns (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($text-align, variants),
         $prefix: map-get($text-align, prefix),
         $textAligns: map-get($text-align, textAligns)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each  $textAlign-name, $textAlign-value in $textAligns {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$textAlign-name}#{$variant-css}{
-                    text-align: $textAlign-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $textAlign-name, $textAlign-value in $textAligns {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$textAlign-name}{
-                    text-align: $textAlign-value !important; 
-                }
-            }
+    @each  $textAlign-name, $textAlign-value in $textAligns {
+        @include screen-variant($screen, $variants, $prefix + '-' + $textAlign-name){
+            text-align: $textAlign-value !important; 
         }
     }
 }

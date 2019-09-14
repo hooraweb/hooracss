@@ -6,7 +6,7 @@
     ) {
     @each  $display-name, $display-value in $types {
         @include screen-variant($screen, $variants, $prefix + $display-name){
-            display: $display-value !important; 
+            display: $display-value !important;
         }
     }
 }

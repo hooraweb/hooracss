@@ -1,34 +1,12 @@
 @mixin screen-font-families (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($font-family, variants),
         $prefix: map-get($font-family, prefix),
         $fontFamilies: map-get($font-family, fontFamilies)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null { 
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $fontFamily-name, $fontFamily-value in $fontFamilies {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$fontFamily-name}#{$variant-css}{
-                    font-family: $fontFamily-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $fontFamily-name, $fontFamily-value in $fontFamilies {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$fontFamily-name}{
-                    font-family: $fontFamily-value !important; 
-                }
-            }
+    @each $fontFamily-name, $fontFamily-value in $fontFamilies {
+        @include screen-variant($screen, $variants, $prefix + '-' + $fontFamily-name){
+            font-family: $fontFamily-value !important; 
         }
     }
 }

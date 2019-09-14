@@ -1,34 +1,12 @@
 @mixin screen-flexes (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($flex, variants),
         $prefix: map-get($flex, prefix),
         $flexes: map-get($flex, flexes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $flex-name, $flex-value in $flexes {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$flex-name}#{$variant-css}{
-                    flex: $flex-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $flex-name, $flex-value in $flexes {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$flex-name}{
-                    flex: $flex-value !important; 
-                }
-            }
+    @each $flex-name, $flex-value in $flexes {
+        @include screen-variant($screen, $variants, $prefix + '-' + $flex-name){
+            flex: $flex-value !important; 
         }
     }
 }

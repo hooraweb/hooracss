@@ -1,34 +1,12 @@
 @mixin screen-letter-spacings (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($letter-spacing, variants),
         $prefix: map-get($letter-spacing, prefix),
         $letterSpacings: map-get($letter-spacing, letterSpacings)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $letterSpacing-name, $letterSpacing-value in $letterSpacings {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$letterSpacing-name}#{$variant-css}{
-                    letter-spacing: $letterSpacing-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $letterSpacing-name, $letterSpacing-value in $letterSpacings {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$letterSpacing-name}{
-                    letter-spacing: $letterSpacing-value !important; 
-                }
-            }
+    @each $letterSpacing-name, $letterSpacing-value in $letterSpacings {
+        @include screen-variant($screen, $variants, $prefix + '-' + $letterSpacing-name){
+            letter-spacing: $letterSpacing-value !important; 
         }
     }
 }

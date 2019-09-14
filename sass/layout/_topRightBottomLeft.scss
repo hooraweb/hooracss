@@ -1,24 +1,12 @@
 @mixin screen-top-right-bottom-lefts (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($top-right-bottom-left, variants),
         $prefixes: map-get($top-right-bottom-left, prefix),
         $top-right-bottom-lefts: map-get($top-right-bottom-left, TopRightBottomLefts)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
             @each $prefix in $prefixes {
                 @each  $top-right-bottom-left-name, $top-right-bottom-left-value in $top-right-bottom-lefts {
-                    .#{$screen-name}#{$variant}#{$prefix}-#{$top-right-bottom-left-name}#{$variant-css}{
+                    @include screen-variant($screen, $variants, $prefix + '-' + $top-right-bottom-left-name){
                         @if $prefix != 'inset'{
                             #{$prefix}: $top-right-bottom-left-value !important; 
                         }
@@ -31,46 +19,15 @@
                         }
                     }
                     @if $prefix == 'inset'{
-                        .#{$screen-name}#{$variant}#{$prefix}-y-#{$top-right-bottom-left-name}#{$variant-css}{
+                        @include screen-variant($screen, $variants, $prefix + '-y-' + $top-right-bottom-left-name){
                             top: $top-right-bottom-left-value !important;
                             bottom: $top-right-bottom-left-value !important;  
                         }
-                        .#{$screen-name}#{$variant}#{$prefix}-x-#{$top-right-bottom-left-name}#{$variant-css}{
+                        @include screen-variant($screen, $variants, $prefix + '-x-' + $top-right-bottom-left-name){
                             right: $top-right-bottom-left-value !important;
                             left: $top-right-bottom-left-value !important;  
                         }
                     }
                 }
             }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $prefix in $prefixes {
-                @each  $top-right-bottom-left-name, $top-right-bottom-left-value in $top-right-bottom-lefts {
-                    .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$top-right-bottom-left-name}{
-                        @if $prefix != 'inset'{
-                            #{$prefix}: $top-right-bottom-left-value !important; 
-                        }
-                        @else{
-                            @each $prefix in $prefixes{
-                                @if $prefix != 'inset'{
-                                    #{$prefix}: $top-right-bottom-left-value !important; 
-                                }
-                            }
-                        }
-                    }
-                    @if $prefix == 'inset'{
-                        .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-y-#{$top-right-bottom-left-name}{
-                            top: $top-right-bottom-left-value !important;
-                            bottom: $top-right-bottom-left-value !important;  
-                        }
-                        .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-x-#{$top-right-bottom-left-name}{
-                            right: $top-right-bottom-left-value !important;
-                            left: $top-right-bottom-left-value !important;  
-                        }
-                    }
-                }
-            }
-        }
     }
-}

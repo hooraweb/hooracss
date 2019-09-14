@@ -1,38 +1,14 @@
 @mixin screen-negative-margins (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($negative-margin, variants),
         $prefix: map-get($negative-margin, prefix),
         $types: map-get($negative-margin, types),
         $negative-marginSizes: map-get($negative-margin, negative-marginSizes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $type-key, $type in $types {
-                @each $negative-marginSize-name, $negative-marginSize-value in $negative-marginSizes {
-                    .#{$screen-name}#{$variant}-#{$prefix}#{$type-key}-#{$negative-marginSize-name}#{$variant-css}{
-                        @include margin-negative-type($type, $negative-marginSize-value);
-                    }
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $type-key, $type in $types {
-                @each $negative-marginSize-name, $negative-marginSize-value in $negative-marginSizes {
-                    .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}#{$type-key}-#{$negative-marginSize-name}{
-                        @include margin-negative-type($type, $negative-marginSize-value); 
-                    }
-                }
+    @each $type-key, $type in $types {
+        @each $negative-marginSize-name, $negative-marginSize-value in $negative-marginSizes {
+            @include screen-variant($screen, $variants, ('-' + $prefix) + $type-key + '-' + $negative-marginSize-name){
+                @include margin-negative-type($type, $negative-marginSize-value);
             }
         }
     }

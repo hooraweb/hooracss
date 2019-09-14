@@ -1,34 +1,12 @@
 @mixin screen-cursors (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($cursor, variants),
         $prefix: map-get($cursor, prefix),
         $cursors: map-get($cursor, cursors)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $cursor-name, $cursor-value in $cursors {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$cursor-name}#{$variant-css}{
-                    cursor: $cursor-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $cursor-name, $cursor-value in $cursors {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$cursor-name}{
-                    cursor: $cursor-value !important; 
-                }
-            }
+    @each $cursor-name, $cursor-value in $cursors {
+        @include screen-variant($screen, $variants, $prefix + '-' + $cursor-name){
+            cursor: $cursor-value !important; 
         }
     }
 }

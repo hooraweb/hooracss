@@ -1,34 +1,12 @@
 @mixin screen-vertical-aligns (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($vertical-align, variants),
         $prefix: map-get($vertical-align, prefix),
         $verticalAligns: map-get($vertical-align, verticalAligns)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each  $verticalAlign-name, $verticalAlign-value in $verticalAligns {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$verticalAlign-name}#{$variant-css}{
-                    vertical-align: $verticalAlign-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $verticalAlign-name, $verticalAlign-value in $verticalAligns {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$verticalAlign-name}{
-                    vertical-align: $verticalAlign-value !important; 
-                }
-            }
+    @each  $verticalAlign-name, $verticalAlign-value in $verticalAligns {
+        @include screen-variant($screen, $variants, $prefix + '-' + $verticalAlign-name){
+            vertical-align: $verticalAlign-value !important; 
         }
     }
 }

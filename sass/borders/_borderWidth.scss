@@ -1,43 +1,17 @@
 @mixin screen-border-widths (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($border-width, variants),
         $prefix: map-get($border-width, prefix),
         $types: map-get($border-width, types),
         $sizes: map-get($border-width, sizes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $type-key, $type in $types {
-                @if $type-key != '' {$type-key:'-' + $type-key}
-                @each $borderWidth-name, $borderWidth-value in $borderWidths {
-                    @if $borderWidth-name != '' {$borderWidth-name:'-' + $borderWidth-name}
-                    .#{$screen-name}#{$variant}#{$prefix}#{$type-key}#{$borderWidth-name}#{$variant-css}{
-                        #{$type}: $borderWidth-value !important; 
-                    }
-                }
-            } 
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $type-key, $type in $types {
-                @if $type-key != '' {$type-key:'-' + $type-key}
-                @each $borderWidth-name, $borderWidth-value in $borderWidths {
-                    @if $borderWidth-name != '' {$borderWidth-name:'-' + $borderWidth-name}
-                    .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$borderWidth-name}{
-                        #{$type}: $borderWidth-value !important; 
-                    }
-                }
+    @each $type-key, $type in $types {
+        @if $type-key != '' {$type-key:'-' + $type-key}
+        @each $borderWidth-name, $borderWidth-value in $borderWidths {
+            @if $borderWidth-name != '' {$borderWidth-name:'-' + $borderWidth-name}
+            @include screen-variant($screen, $variants, $prefix + $type-key + $borderWidth-name){
+                #{$type}: $borderWidth-value !important; 
             }
         }
-    }
+    } 
 }

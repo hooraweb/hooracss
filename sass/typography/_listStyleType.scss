@@ -1,34 +1,12 @@
 @mixin screen-list-style-types (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($list-style-type, variants),
         $prefix: map-get($list-style-type, prefix),
         $listStyleTypes: map-get($list-style-type, listStyleTypes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each  $listStyleType-name, $listStyleType-value in $listStyleTypes {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$listStyleType-name}#{$variant-css}{
-                    list-style-type: $listStyleType-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $listStyleType-name, $listStyleType-value in $listStyleTypes {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$listStyleType-name}{
-                    list-style-type: $listStyleType-value !important; 
-                }
-            }
+    @each  $listStyleType-name, $listStyleType-value in $listStyleTypes {
+        @include screen-variant($screen, $variants, $prefix + '-' + $listStyleType-name){
+            list-style-type: $listStyleType-value !important; 
         }
     }
 }

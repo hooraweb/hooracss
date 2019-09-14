@@ -1,34 +1,12 @@
 @mixin screen-white-spaces (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($white-space, variants),
         $prefix: map-get($white-space, prefix),
         $whiteSpaces: map-get($white-space, whiteSpaces)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $whiteSpace-name, $whiteSpace-value in $whiteSpaces {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$whiteSpace-name}#{$variant-css}{
-                    white-space: $whiteSpace-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $whiteSpace-name, $whiteSpace-value in $whiteSpaces {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$whiteSpace-name}{
-                    white-space: $whiteSpace-value !important; 
-                }
-            }
+    @each $whiteSpace-name, $whiteSpace-value in $whiteSpaces {
+        @include screen-variant($screen, $variants, $prefix + '-' + $whiteSpace-name){
+            white-space: $whiteSpace-value !important; 
         }
     }
 }

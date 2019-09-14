@@ -1,34 +1,12 @@
 @mixin screen-table-layouts (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($table-layout, variants),
         $prefix: map-get($table-layout, prefix),
         $tableLayouts: map-get($table-layout, tableLayouts)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $tableLayout-name, $tableLayout-value in $tableLayouts {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$tableLayout-name}#{$variant-css}{
-                    table-layout: $tableLayout-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $tableLayout-name, $tableLayout-value in $tableLayouts {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$tableLayout-name}{
-                    table-layout: $tableLayout-value !important; 
-                }
-            }
+    @each $tableLayout-name, $tableLayout-value in $tableLayouts {
+        @include screen-variant($screen, $variants, $prefix + '-' + $tableLayout-name){
+            table-layout: $tableLayout-value !important; 
         }
     }
 }

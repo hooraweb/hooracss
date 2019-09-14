@@ -1,34 +1,12 @@
 @mixin screen-widths (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($width, variants),
         $prefix: map-get($width, prefix),
         $widthSizes: map-get($width, widthSizes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $widthSize-name, $widthSizes-value in $widthSizes {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$widthSize-name}#{$variant-css}{
-                    width: $widthSizes-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $widthSize-name, $widthSize-value in $widthSizes {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$widthSize-name}{
-                    width: $widthSize-value !important; 
-                }
-            }
+    @each $widthSize-name, $widthSizes-value in $widthSizes {
+        @include screen-variant($screen, $variants, $prefix + '-' + $widthSize-name){
+            width: $widthSizes-value !important; 
         }
     }
 }

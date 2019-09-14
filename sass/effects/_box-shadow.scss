@@ -1,35 +1,13 @@
 @mixin screen-box-shadows (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($box-shadow, variants),
         $prefix: map-get($box-shadow, prefix),
         $shadowEffects: map-get($box-shadow, shadowEffects)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $shadowEffect-name, $shadowEffect-value in $shadowEffects {
-                @if $shadowEffect-name != ''{ $shadowEffect-name: '-' + $shadowEffect-name}
-                .#{$screen-name}#{$variant}#{$prefix}#{$shadowEffect-name}#{$variant-css}{
-                    box-shadow: $shadowEffect-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $shadowEffect-name, $shadowEffect-value in $shadowEffects {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$shadowEffect-name}{
-                    box-shadow: $shadowEffect-value !important; 
-                }
-            }
+    @each $shadowEffect-name, $shadowEffect-value in $shadowEffects {
+        @if $shadowEffect-name != ''{ $shadowEffect-name: '-' + $shadowEffect-name}
+        @include screen-variant($screen, $variants, $prefix + $shadowEffect-name){
+            box-shadow: $shadowEffect-value !important; 
         }
     }
 }

@@ -1,34 +1,12 @@
 @mixin screen-border-collapses (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($border-collapse, variants),
         $prefix: map-get($border-collapse, prefix),
         $borderCollapses: map-get($border-collapse, borderCollapses)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $borderCollapse-name, $borderCollapse-value in $borderCollapses {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$borderCollapse-name}#{$variant-css}{
-                    border-collapse: $borderCollapse-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $borderCollapse-name, $borderCollapse-value in $borderCollapses {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$borderCollapse-name}{
-                    border-collapse: $borderCollapse-value !important; 
-                }
-            }
+    @each $borderCollapse-name, $borderCollapse-value in $borderCollapses {
+        @include screen-variant($screen, $variants, $prefix + '-' + $borderCollapse-name){
+            border-collapse: $borderCollapse-value !important; 
         }
     }
 }

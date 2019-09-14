@@ -1,34 +1,12 @@
 @mixin screen-background-positions (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($background-position, variants),
         $prefix: map-get($background-position, prefix),
         $backgroundPositions: map-get($background-position, backgroundPositions)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $backgroundPosition-name, $backgroundPosition-value in $backgroundPositions {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$backgroundPosition-name}#{$variant-css}{
-                    background-position: $backgroundPosition-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $backgroundPosition-name, $backgroundPosition-value in $backgroundPositions {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$backgroundPosition-name}{
-                    background-position: $backgroundPosition-value !important; 
-                }
-            }
+    @each $backgroundPosition-name, $backgroundPosition-value in $backgroundPositions {
+        @include screen-variant($screen, $variants, $prefix + '-' + $backgroundPosition-name){
+            background-position: $backgroundPosition-value !important; 
         }
     }
-}
+} 

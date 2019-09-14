@@ -1,35 +1,12 @@
 @mixin screen-text-decorations (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($text-decoration, variants),
         $prefix: map-get($text-decoration, prefix),
         $textDecorations: map-get($text-decoration, textDecorations)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @if $prefix != ''{ $prefix: $prefix + '-'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each  $textDecoration-name, $textDecoration-value in $textDecorations {
-                .#{$screen-name}#{$variant}#{$prefix}#{$textDecoration-name}#{$variant-css}{
-                    text-decoration: $textDecoration-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $textDecoration-name, $textDecoration-value in $textDecorations {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$textDecoration-name}{
-                    text-decoration: $textDecoration-value !important; 
-                }
-            }
+    @each  $textDecoration-name, $textDecoration-value in $textDecorations {
+        @include screen-variant($screen, $variants, $prefix + $textDecoration-name){
+            text-decoration: $textDecoration-value !important; 
         }
     }
 }

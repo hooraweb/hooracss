@@ -1,34 +1,12 @@
 @mixin screen-flex-shrinks (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($flex-shrink, variants),
         $prefix: map-get($flex-shrink, prefix),
         $flexShrinks: map-get($flex-shrink, flexShrinks)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $flexShrink-name, $flexShrink-value in $flexShrinks {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$flexShrink-name}#{$variant-css}{
-                    flex-shrink: $flexShrink-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $flexShrink-name, $flexShrink-value in $flexShrinks {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$flexShrink-name}{
-                    flex-shrink: $flexShrink-value !important; 
-                }
-            }
+    @each $flexShrink-name, $flexShrink-value in $flexShrinks {
+        @include screen-variant($screen, $variants, $prefix + '-' + $flexShrink-name){
+            flex-shrink: $flexShrink-value !important; 
         }
     }
 }

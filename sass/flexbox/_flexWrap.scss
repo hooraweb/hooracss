@@ -1,34 +1,12 @@
 @mixin screen-flex-wraps (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($flex-wrap, variants),
         $prefix: map-get($flex-wrap, prefix),
         $flexWraps: map-get($flex-wrap, flexWraps)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $flexWrap-name, $flexWrap-value in $flexWraps {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$flexWrap-name}#{$variant-css}{
-                    flex-wrap: $flexWrap-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $flexWrap-name, $flexWrap-value in $flexWraps {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$flexWrap-name}{
-                    flex-wrap: $flexWrap-value !important; 
-                }
-            }
+    @each $flexWrap-name, $flexWrap-value in $flexWraps {
+        @include screen-variant($screen, $variants, $prefix + '-' + $flexWrap-name){
+            flex-wrap: $flexWrap-value !important; 
         }
     }
 }

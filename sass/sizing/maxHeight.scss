@@ -1,34 +1,12 @@
 @mixin screen-max-heights (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($max-height, variants),
         $prefix: map-get($max-height, prefix),
         $maxHeightSizes: map-get($max-height, maxHeightSizes)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $maxHeightSize-name, $maxHeightSize-value in $maxHeightSizes {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$maxHeightSize-name}#{$variant-css}{
-                    max-height: $maxHeightSize-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $maxHeightSize-name, $maxHeightSize-value in $maxHeightSizes {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$maxHeightSize-name}{
-                    max-height: $maxHeightSize-value !important; 
-                }
-            }
+    @each $maxHeightSize-name, $maxHeightSize-value in $maxHeightSizes {
+        @include screen-variant($screen, $variants, $prefix + '-' + $maxHeightSize-name){
+            max-height: $maxHeightSize-value !important; 
         }
     }
 }

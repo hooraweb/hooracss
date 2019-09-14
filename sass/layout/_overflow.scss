@@ -1,66 +1,29 @@
 @mixin screen-overflows (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($overflow, variants),
         $prefix: map-get($overflow, prefix),
         $overflows: map-get($overflow, overflows)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$overflow-name}#{$variant-css}{
-                    overflow: $overflow-value !important; 
-                }
-            }
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant}#{$prefix}-x-#{$overflow-name}#{$variant-css}{
-                    overflow-x: $overflow-value !important; 
-                }
-            }
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant}#{$prefix}-y-#{$overflow-name}#{$variant-css}{
-                    overflow-y: $overflow-value !important; 
-                }
-            }
-            .#{$screen-name}#{$variant}scrolling-touch#{$variant-css}{
-                -webkit-overflow-scrolling: touch !important; 
-            }
-            .#{$screen-name}#{$variant}scrolling-auto#{$variant-css}{
-                -webkit-overflow-scrolling: auto !important; 
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$overflow-name}{
-                    overflow: $overflow-value !important; 
-                }
-            }
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-x-#{$overflow-name}{
-                    overflow-x: $overflow-value !important; 
-                }
-            }
-            @each $overflow-name, $overflow-value in $overflows {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-y-#{$overflow-name}{
-                    overflow-y: $overflow-value !important; 
-                }
-            }
-            .#{$screen-name}#{$variant-css} .#{$variant}scrolling-touch{
-                -webkit-overflow-scrolling: touch !important; 
-            }
-            .#{$screen-name}#{$variant-css} .#{$variant}scrolling-auto{
-                -webkit-overflow-scrolling: auto !important;
-            }
+    
+    @each $overflow-name, $overflow-value in $overflows {
+        @include screen-variant($screen, $variants, $prefix + '-' + $overflow-name){
+            overflow: $overflow-value !important; 
         }
+    }
+    @each $overflow-name, $overflow-value in $overflows {
+        @include screen-variant($screen, $variants, $prefix + '-x-' + $overflow-name){
+            overflow-x: $overflow-value !important; 
+        }
+    }
+    @each $overflow-name, $overflow-value in $overflows {
+        @include screen-variant($screen, $variants, $prefix + '-y-' + $overflow-name){
+            overflow-y: $overflow-value !important; 
+        }
+    }
+    @include screen-variant($screen, $variants, ('') + 'scrolling-touch'){
+        -webkit-overflow-scrolling: touch !important; 
+    }
+    @include screen-variant($screen, $variants, ('') + 'scrolling-auto'){
+        -webkit-overflow-scrolling: auto !important; 
     }
 }

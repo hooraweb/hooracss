@@ -1,34 +1,12 @@
 @mixin screen-border-colors (
-        $screen-name: '',
+        $screen: '',
         $variants: map-get($border-color, variants),
         $prefix: map-get($border-color, prefix),
         $borderColors: map-get($border-color, borderColors)
     ) {
-    @if $screen-name != ''{ $screen-name: $screen-name + '\\:'; }
-    @each $variant in $variants {
-        $variant-css: '';
-        @if index($variant-list ,$variant ) != null {
-            @if $variant != ''{
-                @if $variant == 'last' {$variant-css: ':last-child'}             
-                @else if $variant == 'first' {$variant-css: ':first-child'} 
-                @else if $variant == 'odd' {$variant-css: ':nth-child(odd)'} 
-                @else if $variant == 'even' {$variant-css: ':nth-child(even)'} 
-                @else {$variant-css: ':' +  $variant;}            
-                $variant: $variant + '\\:'; 
-            }
-            @each $borderColor-name, $borderColor-value in $borderColors {
-                .#{$screen-name}#{$variant}#{$prefix}-#{$borderColor-name}#{$variant-css}{
-                    border-color: $borderColor-value !important; 
-                }
-            }
-        } @else if $variant == 'group-hover' {
-            $variant-css: 'group\:hover';
-            $variant: $variant + '\\:';
-            @each $borderColor-name, $borderColor-value in $borderColors {
-                .#{$screen-name}#{$variant-css} .#{$screen-name}#{$variant}#{$prefix}-#{$borderColor-name}{
-                    border-color: $borderColor-value !important; 
-                }
-            }
-        } 
+    @each $borderColor-name, $borderColor-value in $borderColors {
+        @include screen-variant($screen, $variants, $prefix + '-' + $borderColor-name){
+            border-color: $borderColor-value !important; 
+        }
     }
 }
